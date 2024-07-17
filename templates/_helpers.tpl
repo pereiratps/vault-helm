@@ -687,6 +687,21 @@ Sets extra ingress annotations
 {{- end -}}
 
 {{/*
+Sets extra standby ingress annotations
+*/}}
+{{- define "vault.standbyIngress.annotations" -}}
+  {{- if .Values.server.standbyIngress.annotations }}
+  annotations:
+    {{- $tp := typeOf .Values.server.standbyIngress.annotations }}
+    {{- if eq $tp "string" }}
+      {{- tpl .Values.server.standbyIngress.annotations . | nindent 4 }}
+    {{- else }}
+      {{- toYaml .Values.server.standbyIngress.annotations | nindent 4 }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+
+{{/*
 Sets extra route annotations
 */}}
 {{- define "vault.route.annotations" -}}
